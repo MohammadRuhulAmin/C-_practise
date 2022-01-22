@@ -1,0 +1,32 @@
+
+using System;
+using System.IO;
+namespace Csharp
+{
+    class program{
+        
+        static void Main(string[] args){
+            // string str = "ABCDEFG";
+            // string x = myString(str);
+            // Console.WriteLine(x);
+            string fpath = @"C:\myFile\solution.txt";
+            string [] lines = File.ReadAllLines(fpath);
+            // Console.Write("My Name IS"+"\n");
+            foreach(String line in lines){
+                Console.Write(line);
+            }
+
+        }
+        public static string myString(string str){
+            string sln = "";
+            for(int i = 0;i<str.Length;i++){
+                if(str[i] == 'A'||str[i] == 'G'){
+                    sln+='x';
+                }
+                else sln +=str[i];
+            }
+            return sln;
+        }
+    }
+
+}
