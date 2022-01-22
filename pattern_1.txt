@@ -1,0 +1,47 @@
+
+
+//ABCDEFGHIJKL
+//A
+//BC
+//DEF
+//GHIJ
+//KL
+using System;
+using System.IO;
+namespace Csharp
+{
+    class program{
+        
+        static void Main(string[] args){
+           string str = "ABCDEFGHIJKLMNOPQR";
+           turnPattern(str);
+        }
+        public static void turnPattern(string str){
+            str+='\0';
+            bool foundNullChar = false;
+            int startIndex = 0;
+            int count = 1;
+            for(int i = 0;str[i]!='\0';i++){
+                int x = 0;
+                if(foundNullChar)break;
+                for(int j = startIndex;;j++){
+                    if(x == count)break;
+                    if(str[j] == '\0'){
+                        foundNullChar = true;
+                        break;
+                    }
+                    else {
+                        
+                        Console.Write(str[j]+ " ");
+                        x++;
+                    }
+                }
+                Console.WriteLine();
+                startIndex+=count;
+                count++;
+                
+            }
+            
+        }
+    }
+}
