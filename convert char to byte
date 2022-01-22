@@ -1,0 +1,25 @@
+
+using System;
+using System.IO;
+using System.Text;
+namespace Csharp
+{
+    //https://www.codeproject.com/Questions/444516/how-to-remove-space-in-a-string
+    class program{
+        
+        static void Main(string[] args){
+            string inputText = fileIO();
+            Console.WriteLine(fileIO());
+        }
+        public static string fileIO(){
+           string str = "My\n Name Is Ruhul Amin\n";
+            byte[] array = Encoding.ASCII.GetBytes(str);
+            foreach(byte element in array){
+                Console.WriteLine("{0}={1}",(char)element,element);
+            }
+
+            return "1";
+        }
+    }
+
+}
