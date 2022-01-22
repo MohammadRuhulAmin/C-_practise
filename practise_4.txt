@@ -1,0 +1,23 @@
+
+using System;
+using System.IO;
+namespace Csharp
+{
+    class program{
+        
+        static void Main(string[] args){
+           string str = "ABCDEFGHIJKLMNOPQR";
+           turnPattern(str);
+        }
+        public static void turnPattern(string str){
+          str+= "\0";
+          int i = 0;
+          while(str[i]!='\0'){
+              Console.WriteLine(str[i]);
+              i++;
+          }
+           
+        }
+    }
+
+}
