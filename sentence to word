@@ -1,0 +1,95 @@
+using System;
+using System.IO;
+namespace Csharp
+{
+    class program{
+        static void Main(string[] args){
+    
+         makeSentences();  
+        }
+        public static void pyramide(string str){
+            int length = str.Length;
+            str +='\0';
+            bool foundNull = false;
+            int startIndex = 0;int counter = 1;
+            for(int i = 0;i<length;i++){
+                for(int j = length;j>=i;j--)Console.Write(" ");
+                int x = 0;
+                if(foundNull )break;
+                for(int j = startIndex;;j++){
+                    if(x == counter)break;
+                    if(str[j] == '\0'){
+                        foundNull = true;
+                        break;
+                    }
+                    else{
+                        Console.Write(str[j]+ " ");
+                        x++;
+                    }
+                }
+                startIndex += counter;
+                counter++;
+                Console.WriteLine();
+                
+            }
+        }
+        public static string freshString(){
+            string filePath = @"C:\myFile\solution.txt";
+            byte []bytes = File.ReadAllBytes(filePath);
+            string finalString = "";
+            for(int i = 0;i<bytes.Length;i++){
+                if(bytes[i] == 32 || bytes[i] == 10 || bytes[i] == 9 || bytes[i] == 13)continue;
+                else finalString += (char)bytes[i];
+            }
+            return finalString;
+        }
+        public static void countCharecter(string str){
+            for(int i = 0;i<str.Length;i++){
+                char x = str[i];
+                int count = 0;
+                for(int j = 0;j<str.Length;j++){
+                    if(i!=j){
+                        if(x == str[j])count++;
+                    }
+                }
+                Console.WriteLine("{0} = {1}", x , count);
+            }
+        }
+        
+        
+        public static void makeSentences(){
+            Console.WriteLine("Byte of null charecter : " + (byte)'\0');
+            string fpath = @"C:\myFile\solution.txt";
+            byte []bytes = File.ReadAllBytes(fpath);
+        
+            Array.Resize(ref bytes,bytes.Length+1);
+            bytes[bytes.Length-1] = (byte)'\0';
+            int startIndex = 0;
+            for(int i = 0;i<bytes.Length;i++){
+                if(bytes[i] == 32 || bytes[i] == 0){
+                    string tempString = "";
+                    int count = 0;
+                    for(int j = startIndex;j!=i;j++){
+                       
+                        tempString += (char)bytes[j];
+                        count++;    
+                    }
+                    Console.WriteLine(tempString);
+                    startIndex = i+1;
+                }
+               
+            }
+            
+        }
+    }
+}
+
+// byte[] myBytes = 
+//          Encoding.ASCII.GetBytes("A"); // gives {65}
+
+// byte[] myBytes = 
+//     Encoding.ASCII.GetBytes("A"+"\0"); // gives {65, 0}
+
+// int[] weeks = {};
+// Array.Resize(ref weeks,weeks.Length + 1);
+// weeks[weeks.Length - 1]=1;
