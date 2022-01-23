@@ -1,0 +1,45 @@
+using System;
+using System.IO;
+namespace Csharp
+{
+    class program{
+        static void Main(string[] args){
+    
+         makeSentences();  
+        }
+        public static void makeSentences(){
+           string filePath = @"C:\myFile\solution.txt";
+           byte []bytes = File.ReadAllBytes(filePath);
+           Array.Resize(ref bytes,bytes.Length+1);
+           bytes[bytes.Length-1] = (byte)'\0';
+           int startIndex = 0;
+           string finalString = "";
+           int sentenceLength = 0;
+           for(int i = 0;i<bytes.Length;i++){
+               if(bytes[i] == 32 || bytes[i] == 0){
+                   string tempString = "";
+                   int wordLength = 0;
+                   for(int j = startIndex;j!=i;j++){
+                       tempString +=(char)bytes[j];
+                       wordLength++;
+                   }
+                   if(wordLength+sentenceLength<=9){
+                       sentenceLength += wordLength;
+                       finalString +=tempString + " ";
+                   }
+                   else if(wordLength+sentenceLength>9 || wordLength>9){
+                       sentenceLength = 0;
+                       finalString += "\n";
+                       finalString+=tempString +" ";
+                       sentenceLength +=wordLength;
+                   }
+                  
+                   startIndex = i+1;
+                   //Console.WriteLine("{0}={1}",tempString,wordLength);
+               }
+           }
+           Console.WriteLine(finalString);
+        }
+    }
+}
+
