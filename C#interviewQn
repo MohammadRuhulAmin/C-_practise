@@ -1,0 +1,166 @@
+
+using System;
+using System.IO;
+namespace Csharp
+{
+    class program{
+        
+        static void Main(string[] args){
+            Console.WriteLine("Pyramide String :");
+            pyramid();
+            Console.WriteLine("Reverse String of each word:");
+            reverseString();
+            Console.WriteLine("Make Sentence :");
+            makeSentence();
+            Console.WriteLine("String Anagram :");
+            AnagramStringOrNot();
+            Console.WriteLine("Count Repeated word of a String ");
+            countRepeatedWordInAString();
+        }
+        public static void makeSentence(){
+            string filePath  = @"C:\myFile\paragraph.txt";
+            byte [] bytes = File.ReadAllBytes(filePath);
+            Array.Resize(ref bytes,bytes.Length+1);
+            bytes[bytes.Length-1] = 0;
+            string freshString = "";
+            for(int i = 0;i<bytes.Length;i++){
+              if(bytes[i] == 10 || bytes[i] == 13 || bytes[i] == 9)continue;
+              else if(bytes[i] == 0)break;
+              else freshString +=(char)bytes[i];
+            }
+            string ansString = "";
+            int sentenceLength = 0;
+            int maxSentenceLength = 20;
+            int startIndex = 0;
+            string tempString = "";
+            for(int i = 0;i<freshString.Length;i++){
+                if((byte)freshString[i] == 32 || (byte)freshString[i] == 0 || freshString[i] == '.' || freshString[i] == ','){
+                    tempString = "";
+                    for(int j = startIndex;j!=i;j++){
+                        tempString+=freshString[j];
+                    }
+                    if(tempString.Length+sentenceLength<=maxSentenceLength){
+                        ansString +=tempString;
+                        sentenceLength+=tempString.Length;
+                    }
+                    else if(tempString.Length>maxSentenceLength || tempString.Length+sentenceLength>maxSentenceLength){
+                        sentenceLength = 0;
+                        ansString+="\n";
+                        ansString+=tempString;
+                        sentenceLength+=tempString.Length;
+                    }
+                    startIndex = i;
+                }
+            }
+            Console.WriteLine(ansString);
+        }
+        public static void AnagramStringOrNot(){
+            string firstString = "abcde";
+            string secondString = "abcx";
+            bool isAnagram = true;
+            for(int i =0;i<secondString.Length;i++){
+                char temp = secondString[i];
+                int count_second = 0;
+                int count_first = 0;
+                for(int j = 0;j<secondString.Length;j++){
+                    if(temp == secondString[j] && i!=j)count_second++;
+                }
+                for(int j = 0;j<firstString.Length;j++){
+                    if(temp == firstString[j])count_first++;
+                }
+                Console.WriteLine("{0} = {1} = {2}",temp ,count_first,count_second);
+                if(count_first<count_second || (count_first == 0 && count_second == 0)){
+                    isAnagram = false;
+                    
+                }
+            }
+            Console.WriteLine(isAnagram?"Yes Anagram":"No Anagram");
+        }
+        public static void reverseString(){
+            string  str = "Hi this is a good work to make it perfect";
+            str +='\0';
+            string tempString = "";
+            string ans = "";
+            int startIndex = 0;
+            for(int i = 0 ;i<str.Length;i++){
+                if((byte)str[i] == 32 || (byte)str[i] == 0){
+                    tempString = "";
+                    for(int j = i;j>=startIndex;j--){
+                        tempString+=str[j];
+                    }
+                    startIndex = i;
+                    ans +=tempString;
+                }
+            }
+            Console.WriteLine(ans);
+        }
+        public static void countRepeatedWordInAString(){
+            string str = "Aynun is a Good Girl. Aynun is 1 year old.She has a Cute doll";
+            str +="\0";
+            int startIndex = 0;
+            string []words = new String[50000];
+            int index = 0;
+            for(int i = 0;i<str.Length;i++){
+                if((byte)str[i] == 32 || str[i] == '\0'){
+                    string targetWord = "";
+                    for(int j = startIndex;j!=i;j++){
+                        if(str[j] == 32)continue;
+                        else if(str[j] == '.')continue;
+                        else targetWord+=str[j];
+                    }
+                    int wordStartIndex = startIndex+1;
+                    int wordEndIndex = i;
+                    words[index] = targetWord;
+                    index++;
+                    startIndex=i;
+                }
+            }
+            for(int i = 0;i!=index;i++){
+                int count = 1;
+                for(int j = 0;j!=index;j++){
+                    if(i!=j){
+                        if(words[i] == words[j])count++;
+                    }
+                }
+                Console.WriteLine(words[i]+" => "+count);
+            }
+
+        }
+
+        public static void pyramid(){
+            string  str = "a\nbc\ndefg\nhi\rjkl\nmnopq\n";
+            str +='\0';
+            int maxWindow = 10/2;
+            string freshString = "";
+            for(int i = 0;str[i]!='\0';i++){
+                if(str[i] == '\n' || str[i] == '\r')continue;
+                else{
+                    freshString +=str[i];
+                }
+            }
+            freshString+='\0';
+            int startIndex = 0;
+            int count = 1;
+            bool foundNullChar = false;
+            for(int i = 0;freshString[i]!='\0';i++){
+                if(foundNullChar)break;
+                int x = 0;
+                for(int j = maxWindow;j>=i;j--)Console.Write(" ");
+                for(int j = startIndex;;j++){
+                    if(freshString[j] == '\0'){
+                        foundNullChar = true;
+                        break;
+                    }
+                    if(x == count)break;
+                    else{
+                        Console.Write(freshString[j]+ " ");
+                        x++;
+                    }
+                }
+                startIndex +=count;
+                count++;
+                Console.WriteLine();
+            }
+        }        
+    }
+}
