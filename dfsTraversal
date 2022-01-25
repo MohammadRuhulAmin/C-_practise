@@ -1,0 +1,46 @@
+
+using System;
+using System.IO;
+namespace Csharp
+{
+    class program{
+        static void Main(string[] args){
+            int nodes = 5;
+          int [,]adj = new int[,]{
+              {1,1,0 ,0,1},
+              {0,0,1 ,0 ,0},
+              {1,1,1,0,0},
+              {1,0,1,0,1},
+              {1,1,0,0,0}
+          };
+           
+           bool []visited = new bool[nodes];
+           for(int i = 0;i<nodes;i++){
+               if(!visited[i]){
+                   dfsTraversal(i,nodes,visited,adj);
+               }
+           }
+        }
+        public static void dfsTraversal(int parent,int nodes,bool []visited,int [,]adj){
+            Stack<int>stk = new Stack<int>();
+            stk.Push(parent);
+            Console.Write(parent+ " ");
+            while(stk.Count !=0){
+                int n = stk.Peek();
+                visited[n] = true;
+                stk.Pop();
+                for(int i = 0;i<nodes;i++){
+                    if(!visited[i] && adj[n,i] == 1){
+                        visited[i] = true;
+                        stk.Push(i);
+                        Console.Write(i+ " ");
+                    }
+                }
+            }
+        }
+
+         
+        
+    } 
+}
+
