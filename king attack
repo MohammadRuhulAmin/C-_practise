@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+char board[9][9];
+void printBoard(){
+	cout << endl;
+	for(int i = 1;i<=8;i++){
+		for(int j = 1;j<=8;j++){
+			cout << board[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+void boardGenerator(int r1,int c1,int r2,int c2){
+	for(int i = 1;i<=8;i++){
+		for(int j = 1;j<=8;j++){
+			board[i][j] = '.';
+		}
+	}
+	board[r1][c1] = 'K';
+	board[r2][c2] = 'G';
+}
+bool canKingAttack = false;
+int shortpath_king = INT_MAX;
+void kingAttack(int r1,int c1){
+	if(r1>8 || c1>8 || r1<1 || c1<1)return;
+	if(board[r1][c1] == 'x')return;
+	if(board[r1][c1] == 'G'){
+		canKingAttack = true;
+		cout << r1 << " " << c1 << endl;
+		
+	}
+	if(board[r1][c1]!='G')board[r1][c1] = 'x';
+	printBoard();
+	kingAttack(r1+1,c1);
+	printBoard();
+	kingAttack(r1,c1+1);
+	printBoard();
+	kingAttack(r1-1,c1);
+	printBoard();
+	kingAttack(r1,c1-1);
+	
+}
+int main(){
+	
+	int r1,c1,r2,c2;
+	cin >> r1 >> c1 >> r2 >>c2;
+	boardGenerator(r1,c1,r2,c2);
+	printBoard();
+	kingAttack(r1,c1);
+	
+	printBoard();
+	if(canKingAttack)cout << "ATTACK!!";
+	else cout << "Dont ATTACK!!";
+	
+	return 0;
+}
