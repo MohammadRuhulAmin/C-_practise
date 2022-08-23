@@ -1,0 +1,3 @@
+to make a project : dotnet new console 
+
+to run a file : dotnet run
